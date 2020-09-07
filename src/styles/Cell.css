@@ -1,0 +1,24 @@
+.cell{
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  font-size: 1.5em;
+  border: 1px solid rgba(0, 100, 200, .3);
+  border-radius: 3px;
+  background: rgba(200, 200, 200, .5);
+  user-select: none;
+}
+
+.blink-blue{
+  animation: blink-blue .5s;
+}
+.blink-red{
+  animation: blink-red .5s;
+}
+
+@keyframes blink-blue {
+  50% { background: rgba(0, 0, 200, .3); }
+}
+@keyframes blink-red {
+  50% { background: rgba(200, 0, 0, .3); }
+}
