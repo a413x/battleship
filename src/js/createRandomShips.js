@@ -1,4 +1,5 @@
 import { getRandomInt } from './utils/math'
+import { SHIP_CELL } from './constants'
 
 const cellsCount = 10
 
@@ -23,7 +24,7 @@ function createRandomShip(size, cells){
     position = getRandomShipPosition(size)
   }
   for(let i = 0; i < position.length; i++){
-    cells[position[i].x][position[i].y] = 1
+    cells[position[i].x][position[i].y] = SHIP_CELL
   }
 }
 

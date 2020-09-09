@@ -1,5 +1,5 @@
 import React from 'react'
-import { create2DArray, id } from '../utils/math'
+import { create2DArray, id } from '../js/utils'
 
 import { Cell } from './Cell.js'
 
