@@ -1,28 +1,33 @@
 import React from 'react'
-import { create2DArray, id } from '../js/utils'
-
 import { Cell } from './Cell.js'
 
-//create 2d array of field cells values
-const cellsArray = create2DArray(10,10)
+import '../styles/BattleField.css'
 
-export const BattleField = ({ player }) => {
-  const renderedCells = cellsArray.map(( row ) => {
-    const renderedRow = row.map(( cell ) =>
-      <Cell isShip={cell} key={id()}/>
+export const BattleField = ({ cellsArray, player, clickCallback }) => {
+  const onClick = (e) => {
+    const target = e.target;
+    if(target.nodeName !== 'TD') return
+    clickCallback(target.parentNode.rowIndex, target.cellIndex, player)
+  }
+
+  const renderedCells = cellsArray.map(( row, rowInd ) => {
+    const renderedRow = row.map(( cell, cellInd ) =>
+      <Cell key={'cell-' + cellInd} cellValue={cell} />
     )
     return (
-      <tr key={id()}>
+      <tr key={'row-' + rowInd}>
         {renderedRow}
       </tr>
     )
   })
 
   return (
-    <table>
-      <tbody>
-        {renderedCells}
-      </tbody>
-    </table>
+    <div className = 'battlefield'>
+      <table className = 'table' onClick = {onClick}>
+        <tbody>
+          {renderedCells}
+        </tbody>
+      </table>
+    </div>
   )
 }
