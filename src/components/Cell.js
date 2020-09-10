@@ -1,21 +1,25 @@
-import React, { useState } from 'react'
+import React from 'react'
 import '../styles/Cell.css'
+import { HITTED, MISSED } from '../js/constants'
 
-export const Cell = ({ isShip }) => {
-  const [ cellClassName, setCellClassName ] = useState('cell')
-  const [ cellContent, setCellContent ] = useState('')
+export let Cell = ({ cellValue }) => {
+  let cellClassName = ''
+  let cellContent = ''
 
-  const onCellClick = (e) => {
-    e.preventDefault()
-    if(cellContent) return
-    const blinkType = isShip ? 'blink-red' : 'blink-blue'
-    setCellClassName(cellClassName + ' ' + blinkType)
-    setCellContent(isShip ? '╳' : '●')
+  if(cellValue === HITTED) {
+    cellClassName = 'hitted-cell'
+    cellContent = '╳'
+  }
+  else if(cellValue === MISSED){
+    cellClassName = 'missed-cell'
+    cellContent = '●'
   }
 
   return (
-    <td className = {cellClassName} onClick = {onCellClick}>
+    <td className = {cellClassName}>
       {cellContent}
     </td>
   )
 }
+
+Cell = React.memo(Cell)
