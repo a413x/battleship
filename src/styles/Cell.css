@@ -1,19 +1,8 @@
-.cell{
-  width: 30px;
-  height: 30px;
-  text-align: center;
-  vertical-align: middle;
-  font-size: 1.2em;
-  border: 1px solid rgba(0, 100, 200, .3);
-  border-radius: 3px;
-  background: rgba(200, 200, 200, .5);
-  user-select: none;
-}
-
-.blink-blue{
+.missed-cell{
   animation: blink-blue .5s;
 }
-.blink-red{
+.hitted-cell{
+  box-shadow: inset 0 0 3px rgba(255, 0, 0, 1);
   animation: blink-red .5s;
 }
 

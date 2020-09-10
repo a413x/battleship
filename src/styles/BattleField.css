@@ -1,0 +1,14 @@
+.battlefield{
+  margin: auto;
+}
+.table td{
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1.2em;
+  border: 1px solid rgba(0, 100, 200, .3);
+  border-radius: 3px;
+  background: rgba(200, 200, 200, .5);
+  user-select: none;
+}
