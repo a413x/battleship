@@ -1,5 +1,5 @@
-export const create2DArray = ( n,m ) => {
-  return new Array(10).fill(null).map(() => new Array(10).fill(0));
+export const create2DArray = ( n, m, val ) => {
+  return new Array(10).fill(null).map(() => new Array(10).fill(val));
 }
 
 export const id = () => '_' + Math.random().toString(36).substr(2, 9);

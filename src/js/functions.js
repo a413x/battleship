@@ -1,7 +1,13 @@
-import { getRandomInt } from './utils/math'
+import { getRandomInt } from './utils'
 import { SHIP_CELL } from './constants'
 
 const cellsCount = 10
+
+export function updateCellsArray(x, y, val, cells){
+  const cellsCopy = [...cells]
+  cellsCopy[x][y] = val
+  return cellsCopy
+}
 
 export function createRandomShips(cells){
   const cellsCopy = [...cells]
@@ -10,6 +16,16 @@ export function createRandomShips(cells){
   createShipsByAmount(3, 2, cellsCopy)
   createShipsByAmount(4, 1, cellsCopy)
   return cellsCopy
+}
+
+export function noShipsAround(x, y, cells){
+  for(let i = x-1; i <= x+1; i++){
+    for(let j = y-1; j <= y+1; j++){
+      if(i < 0 || j < 0 || i > cellsCount-1 || j > cellsCount - 1) continue
+      if(cells[i][j] === SHIP_CELL) return false
+    }
+  }
+  return true
 }
 
 function createShipsByAmount(amount, size, cells){
@@ -48,16 +64,6 @@ function getRandomShipPosition(shipSize){
 function shipFits(position, cells){
   for(let i = 0; i < position.length; i++){
     if( !noShipsAround(position[i].x, position[i].y, cells) ) return false
-  }
-  return true
-}
-
-function noShipsAround(x, y, cells){
-  for(let i = x-1; i <= x+1; i++){
-    for(let j = y-1; j <= y+1; j++){
-      if(i < 0 || j < 0 || i > cellsCount-1 || j > cellsCount - 1) continue
-      if(cells[i][j]) return false
-    }
   }
   return true
 }
