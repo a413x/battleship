@@ -1,16 +1,16 @@
 import { getRandomInt } from './utils'
-import { SHIP_CELL } from './constants'
+import { SHIP_CELL, HITTED, MISSED } from './constants'
 
 const cellsCount = 10
 
 export function updateCellsArray(x, y, val, cells){
-  const cellsCopy = [...cells]
+  const cellsCopy = createCopy(cells)
   cellsCopy[x][y] = val
   return cellsCopy
 }
 
 export function createRandomShips(cells){
-  const cellsCopy = [...cells]
+  const cellsCopy = createCopy(cells)
   createRandomShip(4, cellsCopy)
   createShipsByAmount(2, 3, cellsCopy)
   createShipsByAmount(3, 2, cellsCopy)
@@ -21,11 +21,36 @@ export function createRandomShips(cells){
 export function noShipsAround(x, y, cells){
   for(let i = x-1; i <= x+1; i++){
     for(let j = y-1; j <= y+1; j++){
-      if(i < 0 || j < 0 || i > cellsCount-1 || j > cellsCount - 1) continue
+      if(pointOutOfBounds(i, j) || (i === x && j === y)) continue
       if(cells[i][j] === SHIP_CELL) return false
     }
   }
   return true
+}
+
+export function shipKilled(x, y, cells){
+  //fill all cells around killed ship
+  const cellsCopy = createCopy(cells)
+  setMissed(x, y)
+  for(let i = 0; i < cells.length; i++){
+    for(let j = 0; j < cells[i].length; j++){
+      if(cells[i][j] === HITTED) cellsCopy[i][j] = HITTED
+    }
+  }
+  return cellsCopy
+
+  function setMissed(x, y){
+    for(let i = x-1; i <= x+1; i++){
+      for(let j = y-1; j <= y+1; j++){
+        if(pointOutOfBounds(i, j)) continue
+        if(cellsCopy[i][j] === HITTED) {
+          cellsCopy[i][j] = MISSED
+          setMissed(i, j)
+        }
+        cellsCopy[i][j] = MISSED
+      }
+    }
+  }
 }
 
 function createShipsByAmount(amount, size, cells){
@@ -66,6 +91,16 @@ function shipFits(position, cells){
     if( !noShipsAround(position[i].x, position[i].y, cells) ) return false
   }
   return true
+}
+
+function pointOutOfBounds(x, y){
+  return x < 0 || y < 0 || x > cellsCount-1 || y > cellsCount - 1
+}
+
+function createCopy(arr){
+  let newArr = []
+  newArr = arr.map((el) => el.slice())
+  return newArr
 }
 
 function getRandomStartPoint(xMax, yMax){

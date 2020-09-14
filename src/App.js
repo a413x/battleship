@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import { create2DArray } from './js/utils'
 import { EMPTY_CELL, SHIP_CELL, HITTED, MISSED } from './js/constants'
-import { createRandomShips, updateCellsArray } from './js/functions'
+import {
+  createRandomShips,
+  updateCellsArray,
+  noShipsAround,
+  shipKilled
+} from './js/functions'
 
 import './styles/App.css';
 
@@ -18,10 +23,15 @@ const App = () => {
     const arr = player === 'ai' ? aiArr : playerArr
     const setter = player === 'ai' ? setAiArr : setPlayerArr
     const value = arr[x][y]
+
     if(value === EMPTY_CELL){
       setter(updateCellsArray(x, y, MISSED, arr))
     }else if(value === SHIP_CELL){
-      setter(updateCellsArray(x, y, HITTED, arr))
+      const updatedArr = updateCellsArray(x, y, HITTED, arr);
+      setter(updatedArr)
+      if(noShipsAround(x, y, updatedArr)){
+        setter(shipKilled(x, y, updatedArr))
+      }
     }
   }
 
