@@ -3,11 +3,13 @@ import { Cell } from './Cell.js'
 
 import '../styles/BattleField.css'
 
-export const BattleField = ({ cellsArray, player, clickCallback }) => {
+export const BattleField = ({ cellsArray, clickCallback }) => {
   const onClick = (e) => {
     const target = e.target;
     if(target.nodeName !== 'TD') return
-    clickCallback(target.parentNode.rowIndex, target.cellIndex, player)
+    if(clickCallback){
+      clickCallback(target.parentNode.rowIndex, target.cellIndex)
+    }
   }
 
   const renderedCells = cellsArray.map(( row, rowInd ) => {

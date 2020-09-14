@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { create2DArray } from './js/utils'
-import { EMPTY_CELL, SHIP_CELL, HITTED, MISSED } from './js/constants'
+import { EMPTY_CELL } from './js/constants'
 import {
   createRandomShips,
-  updateCellsArray,
-  noShipsAround,
-  shipKilled
+  shotHandler,
 } from './js/functions'
 
 import './styles/App.css';
@@ -19,31 +17,16 @@ const App = () => {
   const [ playerArr, setPlayerArr ] = useState(initialPlayerArr)
   const [ aiArr, setAiArr ] = useState(initialAiArr)
 
-  const onCellClick = (x, y, player) => {
-    const arr = player === 'ai' ? aiArr : playerArr
-    const setter = player === 'ai' ? setAiArr : setPlayerArr
-    const value = arr[x][y]
-
-    if(value === EMPTY_CELL){
-      setter(updateCellsArray(x, y, MISSED, arr))
-    }else if(value === SHIP_CELL){
-      const updatedArr = updateCellsArray(x, y, HITTED, arr);
-      setter(updatedArr)
-      if(noShipsAround(x, y, updatedArr)){
-        setter(shipKilled(x, y, updatedArr))
-      }
-    }
+  const onCellClick = (x, y) => {
+    shotHandler(x, y, aiArr, setAiArr)
   }
 
   return (
     <div className='app'>
       <BattleField
-        cellsArray = {playerArr}
-        player = 'player'
-        clickCallback = {onCellClick} />
+        cellsArray = {playerArr}/>
       <BattleField
         cellsArray = {aiArr}
-        player = 'ai'
         clickCallback = {onCellClick} />
     </div>
   );

@@ -1,12 +1,19 @@
 import { getRandomInt } from './utils'
-import { SHIP_CELL, HITTED, MISSED } from './constants'
+import { EMPTY_CELL, SHIP_CELL, HITTED, MISSED } from './constants'
 
 const cellsCount = 10
 
-export function updateCellsArray(x, y, val, cells){
-  const cellsCopy = createCopy(cells)
-  cellsCopy[x][y] = val
-  return cellsCopy
+export function shotHandler(x, y, arr, setter){
+  const value = arr[x][y]
+  if(value === EMPTY_CELL){
+    setter(updateCellsArray(x, y, MISSED, arr))
+  }else if(value === SHIP_CELL){
+    const updatedArr = updateCellsArray(x, y, HITTED, arr);
+    setter(updatedArr)
+    if(noShipsAround(x, y, updatedArr)){
+      setter(shipKilled(x, y, updatedArr))
+    }
+  }
 }
 
 export function createRandomShips(cells){
@@ -18,7 +25,7 @@ export function createRandomShips(cells){
   return cellsCopy
 }
 
-export function noShipsAround(x, y, cells){
+function noShipsAround(x, y, cells){
   for(let i = x-1; i <= x+1; i++){
     for(let j = y-1; j <= y+1; j++){
       if(pointOutOfBounds(i, j) || (i === x && j === y)) continue
@@ -28,7 +35,7 @@ export function noShipsAround(x, y, cells){
   return true
 }
 
-export function shipKilled(x, y, cells){
+function shipKilled(x, y, cells){
   //fill all cells around killed ship
   const cellsCopy = createCopy(cells)
   setMissed(x, y)
@@ -51,6 +58,12 @@ export function shipKilled(x, y, cells){
       }
     }
   }
+}
+
+function updateCellsArray(x, y, val, cells){
+  const cellsCopy = createCopy(cells)
+  cellsCopy[x][y] = val
+  return cellsCopy
 }
 
 function createShipsByAmount(amount, size, cells){
