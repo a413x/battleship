@@ -5,6 +5,7 @@ import {
   createRandomShips,
   shotHandler,
 } from './js/functions'
+import { aiTurn } from './js/ai'
 
 import './styles/App.css';
 
@@ -16,13 +17,16 @@ const initialAiArr = createRandomShips(create2DArray(10, 10, EMPTY_CELL));
 const App = () => {
   const [ playerArr, setPlayerArr ] = useState(initialPlayerArr)
   const [ aiArr, setAiArr ] = useState(initialAiArr)
+  const [ currentPlayer, setCurrentPlayer ] = useState('Player')
 
   const onCellClick = (x, y) => {
     shotHandler(x, y, aiArr, setAiArr)
+    aiTurn(playerArr, setPlayerArr)
   }
 
   return (
     <div className='app'>
+      <div>{currentPlayer} turn</div>
       <BattleField
         cellsArray = {playerArr}/>
       <BattleField

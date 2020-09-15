@@ -12,8 +12,10 @@ export function shotHandler(x, y, arr, setter){
     setter(updatedArr)
     if(noShipsAround(x, y, updatedArr)){
       setter(shipKilled(x, y, updatedArr))
+      return true
     }
   }
+  return false
 }
 
 export function createRandomShips(cells){
@@ -106,7 +108,7 @@ function shipFits(position, cells){
   return true
 }
 
-function pointOutOfBounds(x, y){
+export function pointOutOfBounds(x, y){
   return x < 0 || y < 0 || x > cellsCount-1 || y > cellsCount - 1
 }
 
