@@ -3,17 +3,19 @@ import { EMPTY_CELL, SHIP_CELL, HITTED, MISSED } from './constants'
 
 const cellsCount = 10
 
+//boolean value returns to use in ai logic to make sure that ship killed
 export function shotHandler(x, y, arr, setter){
   const value = arr[x][y]
   if(value === EMPTY_CELL){
     setter(updateCellsArray(x, y, MISSED, arr))
   }else if(value === SHIP_CELL){
-    const updatedArr = updateCellsArray(x, y, HITTED, arr);
-    setter(updatedArr)
-    if(noShipsAround(x, y, updatedArr)){
-      setter(shipKilled(x, y, updatedArr))
+    const updatedArr = updateCellsArray(x, y, HITTED, arr)
+    const hittedInfo = shipKilledOrHitted(x, y, updatedArr)
+    if(hittedInfo.isLastHittedCell){
+      setter(hittedInfo.cells)
       return true
     }
+    setter(updatedArr)
   }
   return false
 }
@@ -37,18 +39,20 @@ function noShipsAround(x, y, cells){
   return true
 }
 
-function shipKilled(x, y, cells){
-  //fill all cells around killed ship
+function shipKilledOrHitted(x, y, cells){
   const cellsCopy = createCopy(cells)
+  let isLastHittedCell = true
   setMissed(x, y)
   for(let i = 0; i < cells.length; i++){
     for(let j = 0; j < cells[i].length; j++){
       if(cells[i][j] === HITTED) cellsCopy[i][j] = HITTED
     }
   }
-  return cellsCopy
+  return { cells: cellsCopy, isLastHittedCell }
 
+  //fill all cells around killed ship
   function setMissed(x, y){
+    if(!noShipsAround(x, y,cells)) isLastHittedCell = false
     for(let i = x-1; i <= x+1; i++){
       for(let j = y-1; j <= y+1; j++){
         if(pointOutOfBounds(i, j)) continue
