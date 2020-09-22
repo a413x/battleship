@@ -20,8 +20,22 @@ const App = () => {
   const [ currentPlayer, setCurrentPlayer ] = useState('Player')
 
   const onCellClick = (x, y) => {
-    shotHandler(x, y, aiArr, setAiArr)
-    aiTurn(playerArr, setPlayerArr)
+    if(currentPlayer === 'Ai') return
+    const shotInfo = shotHandler(x, y, aiArr, setAiArr)
+    if(shotInfo.result === 'win'){
+      alert('Player wins!')
+      return
+    }
+    else if(shotInfo.result === 'missed'){
+      setCurrentPlayer('Ai')
+      setTimeout(() => {
+        aiTurn(playerArr,
+          setPlayerArr,
+          () => { setCurrentPlayer('Player') },
+          () => { alert('Ai wins!') }
+        )
+      }, 500)
+    }
   }
 
   return (

@@ -3,21 +3,48 @@ import { EMPTY_CELL, SHIP_CELL, HITTED, MISSED } from './constants'
 
 const cellsCount = 10
 
-//boolean value returns to use in ai logic to make sure that ship killed
 export function shotHandler(x, y, arr, setter){
   const value = arr[x][y]
+  let shotInfo = {}
   if(value === EMPTY_CELL){
-    setter(updateCellsArray(x, y, MISSED, arr))
+    shotInfo = {
+      arr: updateCellsArray(x, y, MISSED, arr),
+      result: 'missed'
+    }
   }else if(value === SHIP_CELL){
     const updatedArr = updateCellsArray(x, y, HITTED, arr)
     const hittedInfo = shipKilledOrHitted(x, y, updatedArr)
     if(hittedInfo.isLastHittedCell){
-      setter(hittedInfo.cells)
-      return true
+      shotInfo = {
+        arr: hittedInfo.cells,
+        result: 'killed'
+      }
     }
-    setter(updatedArr)
+    else{
+      shotInfo = {
+        arr: updatedArr,
+        result: 'hitted'
+      }
+    }
+  }else {
+    shotInfo = {
+      arr: arr,
+      result: ''
+    }
   }
-  return false
+  setter(shotInfo.arr)
+  if(endGame(shotInfo.arr)) shotInfo.result = 'win'
+  return shotInfo
+}
+
+function endGame(cells){
+  let numberOfHittedCells = 0
+  for(let i = 0; i < cells.length; i++){
+    for(let j = 0; j < cells[i].length; j++){
+      if(cells[i][j] === HITTED) numberOfHittedCells++
+    }
+  }
+  return numberOfHittedCells === 20
 }
 
 export function createRandomShips(cells){

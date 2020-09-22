@@ -4,18 +4,26 @@ import { getRandomInt } from './utils'
 
 let hittedCells = []
 
-export function aiTurn(cells, setter){
+export function aiTurn(cells, setter, changePlayer, aiWinsCallback){
   let shot
   if(hittedCells.length) {
     shot = sightingAiShot(cells)
   }else {
     shot = randomAiShot(cells)
   }
-  const killed = shotHandler(shot.x, shot.y, cells, setter)
-  if(killed){
-    hittedCells = []
+  const shotInfo = shotHandler(shot.x, shot.y, cells, setter)
+  if(shotInfo.result === 'win'){
+    aiWinsCallback()
+  }else if(shotInfo.result === 'missed'){
+    changePlayer()
+  }else{
+    if(shotInfo.result === 'killed') hittedCells = []
+    //let ai shoot again on hit
+    setTimeout(() => {
+      aiTurn(shotInfo.arr, setter, changePlayer, aiWinsCallback)
+    }, 500)
   }
-  return killed
+  return shotInfo
 }
 
 function randomAiShot(cells){
