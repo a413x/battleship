@@ -1,8 +1,8 @@
 import React from 'react'
 import '../styles/Cell.css'
-import { HITTED, MISSED } from '../js/constants'
+import { SHIP_CELL, HITTED, MISSED } from '../js/constants'
 
-export let Cell = ({ cellValue }) => {
+export let Cell = ({ cellValue, player }) => {
   let cellClassName = ''
   let cellContent = ''
 
@@ -13,6 +13,10 @@ export let Cell = ({ cellValue }) => {
   else if(cellValue === MISSED){
     cellClassName = 'missed-cell'
     cellContent = '●'
+  }
+
+  if(cellValue === SHIP_CELL && player) {
+    cellClassName += ' player'
   }
 
   return (
