@@ -69,7 +69,7 @@ function noShipsAround(x, y, cells){
 function shipKilledOrHitted(x, y, cells){
   const cellsCopy = createCopy(cells)
   let isLastHittedCell = true
-  setMissed(x, y)
+  fillMissed(x, y)
   for(let i = 0; i < cells.length; i++){
     for(let j = 0; j < cells[i].length; j++){
       if(cells[i][j] === HITTED) cellsCopy[i][j] = HITTED
@@ -77,15 +77,15 @@ function shipKilledOrHitted(x, y, cells){
   }
   return { cells: cellsCopy, isLastHittedCell }
 
-  //fill all cells around killed ship
-  function setMissed(x, y){
+  //fill all cells around killed ship and check if it's a last ship cell
+  function fillMissed(x, y){
     if(!noShipsAround(x, y,cells)) isLastHittedCell = false
     for(let i = x-1; i <= x+1; i++){
       for(let j = y-1; j <= y+1; j++){
         if(pointOutOfBounds(i, j)) continue
         if(cellsCopy[i][j] === HITTED) {
           cellsCopy[i][j] = MISSED
-          setMissed(i, j)
+          fillMissed(i, j)
         }
         cellsCopy[i][j] = MISSED
       }
@@ -134,7 +134,8 @@ function getRandomShipPosition(shipSize){
 
 function shipFits(position, cells){
   for(let i = 0; i < position.length; i++){
-    if( !noShipsAround(position[i].x, position[i].y, cells) ) return false
+    const {x ,y} = position[i]
+    if( !noShipsAround(x, y, cells) || cells[x][y] === SHIP_CELL ) return false
   }
   return true
 }
