@@ -49,11 +49,15 @@ function endGame(cells){
 
 export function createRandomShips(cells){
   const cellsCopy = createCopy(cells)
-  createRandomShip(4, cellsCopy)
-  createShipsByAmount(2, 3, cellsCopy)
-  createShipsByAmount(3, 2, cellsCopy)
-  createShipsByAmount(4, 1, cellsCopy)
-  return cellsCopy
+  const positions = {}
+  positions['4'] = [createRandomShip(4, cellsCopy)]
+  positions['3'] = createShipsByAmount(2, 3, cellsCopy)
+  positions['2'] = createShipsByAmount(3, 2, cellsCopy)
+  positions['1'] = createShipsByAmount(4, 1, cellsCopy)
+  return {
+    cells: cellsCopy,
+    positions
+  }
 }
 
 function noShipsAround(x, y, cells){
@@ -100,9 +104,12 @@ function updateCellsArray(x, y, val, cells){
 }
 
 function createShipsByAmount(amount, size, cells){
+  let posArr = []
   for(let i = 0; i < amount; i++){
-    createRandomShip(size, cells)
+    const position = createRandomShip(size, cells)
+    posArr.push(position)
   }
+  return posArr
 }
 
 function createRandomShip(size, cells){
@@ -113,6 +120,24 @@ function createRandomShip(size, cells){
   for(let i = 0; i < position.length; i++){
     cells[position[i].x][position[i].y] = SHIP_CELL
   }
+  return position
+}
+
+export function createShip(positions, cells){
+  const cellsCopy = createCopy(cells)
+  if(!shipFits(positions,cells)) return null
+  for(let i = 0; i < positions.length; i++){
+    cellsCopy[positions[i].x][positions[i].y] = SHIP_CELL
+  }
+  return cellsCopy
+}
+
+export function clearPositions(positions, cells){
+  const cellsCopy = createCopy(cells)
+  for(let i = 0; i < positions.length; i++){
+    cellsCopy[positions[i].x][positions[i].y] = EMPTY_CELL
+  }
+  return cellsCopy
 }
 
 function getRandomShipPosition(shipSize){
@@ -135,6 +160,7 @@ function getRandomShipPosition(shipSize){
 function shipFits(position, cells){
   for(let i = 0; i < position.length; i++){
     const {x ,y} = position[i]
+    if(x >= cellsCount || y >= cellsCount) return false
     if( !noShipsAround(x, y, cells) || cells[x][y] === SHIP_CELL ) return false
   }
   return true

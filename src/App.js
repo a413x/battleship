@@ -4,6 +4,8 @@ import { EMPTY_CELL } from './js/constants'
 import {
   createRandomShips,
   shotHandler,
+  createShip,
+  clearPositions
 } from './js/functions'
 import { aiTurn } from './js/ai'
 
@@ -12,8 +14,9 @@ import './styles/App.css';
 import { BattleField } from './components/BattleField'
 import { ShipPicker } from './components/ShipPicker'
 
-const initialPlayerArr = createRandomShips(create2DArray(10, 10, EMPTY_CELL));
-const initialAiArr = createRandomShips(create2DArray(10, 10, EMPTY_CELL));
+const initialPlayerArr = create2DArray(10,10, EMPTY_CELL)
+const initialAiArr =
+  createRandomShips(create2DArray(10, 10, EMPTY_CELL)).cells;
 
 const App = () => {
   const [ playerArr, setPlayerArr ] = useState(initialPlayerArr)
@@ -40,11 +43,55 @@ const App = () => {
     }
   }
 
+  const pickerDrop = (positions) => {
+    const newArr = createShip(positions, playerArr)
+    if(newArr === null) return false
+    setPlayerArr(newArr)
+    return true
+  }
+
+  const pickerDragStart = (positions) => {
+    setPlayerArr(clearPositions(positions, playerArr))
+  }
+
+  const pickerSetRandom = () => {
+    const randomShips = createRandomShips(create2DArray(10,10,EMPTY_CELL))
+    setPlayerArr(randomShips.cells)
+    return randomShips.positions
+  }
+
+  const pickerRotate = (indices, newIndices) => {
+    const cleared = clearPositions(indices, playerArr)
+    const newArr = createShip(newIndices, cleared)
+    if(newArr === null) {
+      setPlayerArr(cleared)
+      return false
+    }
+    setPlayerArr(newArr)
+    return true
+  }
+
+  const pickerResetAll = () => {
+    setPlayerArr(initialPlayerArr)
+  }
+
+  const pickerReady = (ready) => {
+  }
+
   return (
     <div className='app'>
-      <div className='info'>{infoMessage}</div>
       <div className='game-container'>
-        <ShipPicker />
+        <div className='info'>
+          <span>{infoMessage}</span>
+        </div>
+        <ShipPicker
+          onShipDrop = {pickerDrop}
+          onShipDragStart = {pickerDragStart}
+          onSetRandom = {pickerSetRandom}
+          onShipRotate = {pickerRotate}
+          onReady = {pickerReady}
+          onResetAll = {pickerResetAll}
+        />
         <BattleField
           cellsArray = {playerArr}
           player = {true} />
