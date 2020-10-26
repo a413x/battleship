@@ -9,7 +9,7 @@
 .ship-picker .button-container{
   margin-left: auto;
 }
-.ship-picker button{
+.ship-picker .button-container button{
   margin: 0 5px;
   font-size: 3em;
   color: grey;
@@ -49,4 +49,10 @@
 }
 .dropzone{
   position: absolute;
+}
+@media (max-width: 800px) {
+  .ship-picker .button-container button{
+    font-size: 1.8em;
+    margin: 0;
+  }
 }

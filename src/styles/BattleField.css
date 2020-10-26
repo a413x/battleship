@@ -1,18 +1,13 @@
 .battlefield{
   display: flex;
-  margin: auto;
 }
-.table td{
-  width: 30px;
-  height: 30px;
-  text-align: center;
-  vertical-align: middle;
+.battlefield td{
   border: 1px solid rgba(0, 100, 200, .3);
   border-radius: 3px;
   background: rgba(200, 200, 200, .5);
   user-select: none;
 }
-.table td.player{
+.battlefield td.player{
   border-color: black;
 }
 .numeration{
@@ -31,16 +26,11 @@
   height: 30px;
 }
 @media (max-width: 800px) {
-  .table td{
-    width: 23px;
-    height: 23px;
-    font-size: .6em;
-  }
   .numeration-v{
-    margin-top: 23px;
+    margin-top: 30px;
   }
   .numeration span{
-    width: 23px;
-    height: 23px;
+    width: 30px;
+    height: 30px;
   }
 }

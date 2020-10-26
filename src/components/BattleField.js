@@ -41,7 +41,7 @@ export const BattleField = ({ cellsArray, clickCallback, player }) => {
             </span>
           )}
         </div>
-        <table className = 'table' onClick = {onClick}>
+        <table className = {player && 'player-table'} onClick = {onClick}>
           <tbody>
             {renderedCells}
           </tbody>
