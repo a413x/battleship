@@ -16,6 +16,8 @@ import { ShipPicker } from './components/ShipPicker'
 
 const [SETUP, STARTED, FINISHED] = [0, 1, 2]
 
+let prevPlayerArr = null
+
 const createRandomArray = () => {
   return createRandomShips(create2DArray(10, 10, EMPTY_CELL)).cells
 }
@@ -88,11 +90,15 @@ const App = () => {
 
   const onGameBtnClick = () => {
     if(gameState === SETUP){
+      setCurrentPlayer('Player')
       setGameState(STARTED)
+      prevPlayerArr = playerArr.map((arr) => arr.slice())
     }
     else{
       setGameState(SETUP)
-      setPlayerArr(initialPlayerArr)
+      if(prevPlayerArr) setPlayerArr(prevPlayerArr)
+      else setPlayerArr(initialPlayerArr)
+      prevPlayerArr = null
       setAiArr(createRandomArray())
     }
   }

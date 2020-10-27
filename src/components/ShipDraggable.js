@@ -1,6 +1,8 @@
 import React, { useEffect, useCallback } from 'react'
 import interact from 'interactjs'
 
+import '../styles/Draggable.css'
+
 const getIndices = (draggable, dropzone, size, rotate) => {
   const {
     top: draggableTop,
@@ -122,7 +124,8 @@ export const ShipDraggable = ({
     })
     const fits = onShipRotate(indices, newIndices)
     const outOfBounds = (indices[0].x > 10 - size) || (indices[0].y > 10 - size)
-    const r = rotate > 0 && !outOfBounds ? 0 : 90
+    let r = rotate > 0 ? 0 : 90
+    if(outOfBounds) r = rotate
     updateSelf({x: position.x, y: position.y}, r, dropped, fits)
     if(fits){
       draggable.dataset.indices = JSON.stringify(newIndices)
