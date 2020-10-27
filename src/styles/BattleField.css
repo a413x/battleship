@@ -25,12 +25,3 @@
   width: 30px;
   height: 30px;
 }
-@media (max-width: 800px) {
-  .numeration-v{
-    margin-top: 30px;
-  }
-  .numeration span{
-    width: 30px;
-    height: 30px;
-  }
-}

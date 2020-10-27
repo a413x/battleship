@@ -22,7 +22,8 @@ export const ShipPicker = ({
     onSetRandom,
     onShipRotate,
     onReady,
-    onResetAll
+    onResetAll,
+    visible
   }) => {
 
   const [pickerShips, setPickerShips] = useState(pickerShipsInit)
@@ -96,7 +97,10 @@ export const ShipPicker = ({
   }
 
   return (
-    <div className = 'ship-picker'>
+    <div
+      className = 'ship-picker'
+      style = {{display: visible ? 'flex' : 'none'}}
+    >
       {renderedShips}
       <div className = 'button-container'>
         <button onClick = {resetAll}>

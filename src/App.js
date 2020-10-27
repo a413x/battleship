@@ -14,21 +14,28 @@ import './styles/App.css';
 import { BattleField } from './components/BattleField'
 import { ShipPicker } from './components/ShipPicker'
 
+const [SETUP, STARTED, FINISHED] = [0, 1, 2]
+
+const createRandomArray = () => {
+  return createRandomShips(create2DArray(10, 10, EMPTY_CELL)).cells
+}
+
 const initialPlayerArr = create2DArray(10,10, EMPTY_CELL)
-const initialAiArr =
-  createRandomShips(create2DArray(10, 10, EMPTY_CELL)).cells;
+const initialAiArr = createRandomArray()
 
 const App = () => {
   const [ playerArr, setPlayerArr ] = useState(initialPlayerArr)
   const [ aiArr, setAiArr ] = useState(initialAiArr)
   const [ currentPlayer, setCurrentPlayer ] = useState('Player')
-  const [ infoMessage, setInfoMessage ] = useState('Preparing')
+  const [ gameState, setGameState ] = useState(SETUP)
+  const [gameBtnDisabled, setGameBtnDisabled] = useState(true)
 
   const onCellClick = (x, y) => {
+    if(gameState !== STARTED) return
     if(currentPlayer === 'Ai') return
     const shotInfo = shotHandler(x, y, aiArr, setAiArr)
     if(shotInfo.result === 'win'){
-      alert('Player wins!')
+      setGameState(FINISHED)
       return
     }
     else if(shotInfo.result === 'missed'){
@@ -37,7 +44,7 @@ const App = () => {
         aiTurn(playerArr,
           setPlayerArr,
           () => { setCurrentPlayer('Player') },
-          () => { alert('Ai wins!') }
+          () => { setGameState(FINISHED) }
         )
       }, 500)
     }
@@ -76,13 +83,39 @@ const App = () => {
   }
 
   const pickerReady = (ready) => {
+    setGameBtnDisabled(!Boolean(ready))
   }
+
+  const onGameBtnClick = () => {
+    if(gameState === SETUP){
+      setGameState(STARTED)
+    }
+    else{
+      setGameState(SETUP)
+      setPlayerArr(initialPlayerArr)
+      setAiArr(createRandomArray())
+    }
+  }
+
+  const gameBtnTitle = gameState === SETUP ? 'Start' : 'Restart'
+  let infoMessage = ''
+  if(gameState === SETUP) infoMessage = 'Setup your field'
+  if(gameState === FINISHED) infoMessage = currentPlayer + ' Wins!'
+  if(gameState === STARTED) infoMessage = currentPlayer + ' turn'
 
   return (
     <div className='app'>
       <div className='game-container'>
         <div className='info'>
           <span>{infoMessage}</span>
+        </div>
+        <div className = 'game-btn-container'>
+          <button
+            className = 'game-btn'
+            onClick = {onGameBtnClick}
+            disabled = {gameBtnDisabled}>
+            {gameBtnTitle}
+          </button>
         </div>
         <ShipPicker
           onShipDrop = {pickerDrop}
@@ -91,6 +124,7 @@ const App = () => {
           onShipRotate = {pickerRotate}
           onReady = {pickerReady}
           onResetAll = {pickerResetAll}
+          visible = {gameState === SETUP}
         />
         <BattleField
           cellsArray = {playerArr}
