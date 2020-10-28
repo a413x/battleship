@@ -16,12 +16,12 @@
 }
 .numeration-v{
   flex-flow: column;
-  margin-top: 30px;
+  margin-top: 26px;
 }
 .numeration span{
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 30px;
-  height: 30px;
+  width: 26px;
+  height: 26px;
 }

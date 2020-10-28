@@ -142,17 +142,17 @@ export const ShipDraggable = ({
   let offsetTop = 0
 
   if(!dropped){
-    offsetLeft = 2
-    offsetTop = 2
+    offsetLeft = 4
+    offsetTop = 4
     if(size === 4) {
-      offsetLeft = 88
+      offsetLeft = 92
     }
     if(size === 3){
-      offsetLeft = 120
+      offsetLeft = 122
       offsetTop += 40
     }
     if(size === 2){
-      offsetTop += 42
+      offsetTop += 40
     }
   }
 

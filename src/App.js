@@ -112,10 +112,10 @@ const App = () => {
   return (
     <div className='app'>
       <div className='game-container'>
-        <div className='info'>
-          <span>{infoMessage}</span>
-        </div>
-        <div className = 'game-btn-container'>
+        <div className = 'info-container'>
+          <span className = {gameState === FINISHED ? 'highlight-info' : ''}>
+            {infoMessage}
+          </span>
           <button
             className = 'game-btn'
             onClick = {onGameBtnClick}

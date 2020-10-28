@@ -1,5 +1,6 @@
 .app{
-  font-size: 1.1em;
+  font-size: 1em;
+  font-family: system-ui;
 }
 .game-container{
   margin: 0 auto;
@@ -9,51 +10,51 @@
   flex-flow: row wrap;
   justify-content: space-between;
 }
-.info{
+.info-container{
   flex: 1 100%;
-  text-align: center;
-  padding: 10px;
-  border-radius: 20px;
-  background: rgba(230, 230, 230, 1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 70px;
+  font-weight: bold;
+  border-radius: 5px;
+  background: rgba(200, 200, 200, .3)
 }
-.game-btn-container{
-  flex: 1 100%;
-  margin-top: 10px;
+.highlight-info{
+  color: rgb(86, 214, 88);
 }
 .game-btn{
-  display: block;
-  margin: auto;
   padding: 10px;
   font-size: .9em;
   border-radius: 5px;
   border: 1px solid;
-  background: rgba(230, 230, 230, 1);
+  background: white;
 }
 table{
   border-spacing: 1px;
 }
 td{
-  min-width:30px;
-  height: 30px;
+  min-width: 26px;
+  height: 26px;
   padding: 0;
   text-align: center;
-  vertical-align: middle;
 }
 @media (max-width: 800px) {
   .app{
-    font-size: .9em;
+    font-size: .8em;
   }
   .game-container{
     width: 375px;
     flex-flow: column;
+    justify-content: center;
+  }
+  .info-container{
+    padding: 2px 70px;
   }
   .info{
     padding: 3px;
   }
   .game-btn{
     padding: 3px;
-  }
-  td{
-    font-size: .6em;
   }
 }

@@ -3,7 +3,8 @@
   position: relative;
   flex: 1 100%;
   display: flex;
-  margin: 30px;
+  margin: 26px;
+  border-radius: 5px;
   background: rgba(200, 200, 200, .3)
 }
 .ship-picker .button-container{
@@ -15,37 +16,6 @@
   color: grey;
   background: transparent;
   border: none;
-}
-.draggable{
-  position: absolute;
-  user-select: none;
-  touch-action: none;
-  z-index: 1;
-  transform-origin: 17px 17px;
-}
-.draggable.error{
-  background: rgba(255, 0, 0, .5);
-}
-.draggable td{
-  border: 1px solid;
-  border-radius: 3px;
-}
-.draggable button{
-  position: absolute;
-  font-size: 1em;
-  border-radius: 50%;
-  border: none;
-  color: white;
-}
-.draggable .rotate-btn{
-  top: -30px;
-  left: 36px;
-  background: rgba(0, 0, 255, .3);
-}
-.draggable .delete-btn{
-  top: -30px;
-  left: 4px;
-  background: rgba(255, 0, 0, .3);
 }
 .dropzone{
   position: absolute;
