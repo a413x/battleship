@@ -2,7 +2,7 @@ import React from 'react'
 import '../styles/Cell.css'
 import { SHIP_CELL, HITTED, MISSED } from '../js/constants'
 
-export let Cell = ({ cellValue, player }) => {
+export let Cell = ({ cellValue, highlight }) => {
   let cellClassName = ''
   let cellContent = ''
 
@@ -15,8 +15,8 @@ export let Cell = ({ cellValue, player }) => {
     cellContent = '●'
   }
 
-  if(cellValue === SHIP_CELL && player) {
-    cellClassName += ' player'
+  if(cellValue === SHIP_CELL && highlight){
+    cellClassName += ' highlight-cell'
   }
 
   return (

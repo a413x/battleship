@@ -4,7 +4,12 @@ import { range } from '../js/utils'
 
 import '../styles/BattleField.css'
 
-export const BattleField = ({ cellsArray, clickCallback, player }) => {
+export const BattleField = ({
+  cellsArray,
+  clickCallback,
+  cellsHighlight,
+  player
+}) => {
   const onClick = (e) => {
     const target = e.target;
     if(target.nodeName !== 'TD') return
@@ -15,7 +20,7 @@ export const BattleField = ({ cellsArray, clickCallback, player }) => {
 
   const renderedCells = cellsArray.map(( row, rowInd ) => {
     const renderedRow = row.map(( cell, cellInd ) =>
-      <Cell key={'cell-' + cellInd} cellValue={cell} player={player} />
+      <Cell key={'cell-' + cellInd} cellValue={cell} highlight={cellsHighlight}/>
     )
     return (
       <tr key={'row-' + rowInd}>

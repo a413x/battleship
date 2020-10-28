@@ -7,7 +7,7 @@
   background: rgba(200, 200, 200, .5);
   user-select: none;
 }
-.battlefield td.player{
+.battlefield .highlight-cell{
   border-color: black;
 }
 .numeration{

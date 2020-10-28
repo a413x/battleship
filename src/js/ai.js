@@ -17,13 +17,17 @@ export function aiTurn(cells, setter, changePlayer, aiWinsCallback){
   }else if(shotInfo.result === 'missed'){
     changePlayer()
   }else{
-    if(shotInfo.result === 'killed') hittedCells = []
+    if(shotInfo.result === 'killed') aiReset()
     //let ai shoot again on hit
     setTimeout(() => {
       aiTurn(shotInfo.arr, setter, changePlayer, aiWinsCallback)
     }, 500)
   }
   return shotInfo
+}
+
+export function aiReset(){
+  hittedCells = []
 }
 
 function randomAiShot(cells){

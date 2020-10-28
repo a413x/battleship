@@ -7,7 +7,7 @@ import {
   createShip,
   clearPositions
 } from './js/functions'
-import { aiTurn } from './js/ai'
+import { aiTurn, aiReset } from './js/ai'
 
 import './styles/App.css';
 
@@ -93,6 +93,7 @@ const App = () => {
       setCurrentPlayer('Player')
       setGameState(STARTED)
       prevPlayerArr = playerArr.map((arr) => arr.slice())
+      aiReset()
     }
     else{
       setGameState(SETUP)
@@ -134,10 +135,12 @@ const App = () => {
         />
         <BattleField
           cellsArray = {playerArr}
+          cellsHighlight = {true}
           player = {true} />
         <BattleField
           cellsArray = {aiArr}
-          clickCallback = {onCellClick} />
+          clickCallback = {onCellClick}
+          cellsHighlight = {gameState === FINISHED} />
       </div>
     </div>
   );
