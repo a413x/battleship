@@ -38,6 +38,7 @@ const App = () => {
     const shotInfo = shotHandler(x, y, aiArr, setAiArr)
     if(shotInfo.result === 'win'){
       setGameState(FINISHED)
+      alert('You win!')
       return
     }
     else if(shotInfo.result === 'missed'){
@@ -46,7 +47,7 @@ const App = () => {
         aiTurn(playerArr,
           setPlayerArr,
           () => { setCurrentPlayer('Player') },
-          () => { setGameState(FINISHED) }
+          () => { setGameState(FINISHED); alert('Ai wins!') }
         )
       }, 500)
     }
