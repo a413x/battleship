@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "94e6686ad08579963d9b80cf7712638b",
+    "revision": "2278950f91313f10c1a001d94a1bdf61",
     "url": "/battleship/index.html"
   },
   {
-    "revision": "547912934f3248f6457b",
-    "url": "/battleship/static/css/main.98c54b1a.chunk.css"
+    "revision": "4cc4f32ec93aca5bd529",
+    "url": "/battleship/static/css/main.627e360a.chunk.css"
   },
   {
     "revision": "e36f86112724ab6eb719",
@@ -16,7 +16,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/battleship/static/js/2.a0892846.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "547912934f3248f6457b",
+    "revision": "4cc4f32ec93aca5bd529",
     "url": "/battleship/static/js/main.0480470c.chunk.js"
   },
   {
