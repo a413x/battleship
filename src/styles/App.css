@@ -1,6 +1,6 @@
 .app{
   font-size: 1em;
-  font-family: system-ui;
+  font-family: system-ui, sans-serif;
 }
 .game-container{
   margin: 0 auto;
@@ -38,6 +38,9 @@ td{
   height: 26px;
   padding: 0;
   text-align: center;
+}
+button:not(:disabled) {
+  cursor: pointer;
 }
 @media (max-width: 800px) {
   .app{
